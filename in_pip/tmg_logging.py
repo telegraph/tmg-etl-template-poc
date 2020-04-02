@@ -34,17 +34,18 @@ class TMGLogging:
     def _load_custom_logger(self):
         """
         :param logging_config: Dict of form
-            {'name': 'name of logger to use from config', 'config': {dictConfig} }
+            {'use': 'name of logger to use from config', 'config': {dictConfig} }
             https://docs.python.org/3/library/logging.config.html#logging.config.dictConfig
         :return:
         """
         logging_config = self.config['logger']
         try:
-            logger_to_use = logging_config['name']
-            for formatter_name, format in  logging_config['config']['formatters']:
-                logging_config['config']['formatters'][formatter_name] = logging_config['config']['formatters'][formatter_name].format(app_name=self.app_name) #TODO: CLeanup
-            logger = logging.getLogger(logger_to_use)
+            logger_to_use = logging_config['use']
+            for formatter_name, format_dict in logging_config['config']['formatters'].items():
+                logging_config['config']['formatters'][formatter_name]['format'] = format_dict['format'].format(app_name=self.app_name) #TODO: CLeanup
             logging.config.dictConfig(logging_config['config'])
+            logger = logging.getLogger(logger_to_use)
             return logger
         except Exception:
             raise Exception('Custom Logging should be of form blah blah blah') # TODO: Clean up this exception catching
+

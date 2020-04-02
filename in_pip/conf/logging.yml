@@ -10,6 +10,7 @@ handlers:
     formatter: 'default'
     class: 'logging.StreamHandler'
     stream: 'ext://sys.stdout' # Default is stderr
+
   errors:
     level: 'ERROR'
     formatter: 'default'
