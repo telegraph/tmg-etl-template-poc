@@ -10,12 +10,13 @@ GOOGLE_CREDENTIALS_PATH = '/google-keys'
 
 class ETLRunner:
 
-    def __init__(self, app_name, config_location, etl_pipeline):
+    def __init__(self, app_name, config_location, ETLPipeline):
 
         self.config = ConfigurationLoader(config_location).config
-        os.environ[GOOGLE_APP_CREDENTIALS_ENV_NAME] = self.config['service_account']
+        if not os.environ.get(GOOGLE_APP_CREDENTIALS_ENV_NAME):
+            os.environ[GOOGLE_APP_CREDENTIALS_ENV_NAME] = self.config['service_account']
         self.logger = TMGLogging(self.config, app_name).logger
-        self.pipeline = etl_pipeline(self.config, self.logger)
+        self.pipeline = ETLPipeline(self.config, self.logger)
 
     def run(self, *args, **kwargs):
         try:
@@ -25,6 +26,10 @@ class ETLRunner:
 
 
 class ETLInterface(metaclass=abc.ABCMeta): #TODO: Find out what the different ABC types are
+
+    def __init__(self, config, logger):
+        self.config = config  # Loaded by default by ETLRunner
+        self.logger = logger  # Loaded by default by ETLRunner
 
     @abc.abstractmethod
     def run_pipeline(self, *args, **kwargs):

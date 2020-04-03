@@ -1,4 +1,14 @@
+Repository:
+
 dummy:
   name: 'poc'
 
 service_account: dev-pipeline.json
+
+bigquery:
+  dataset: abc
+  table: def
+
+mysql:
+  password: fasasddf
+

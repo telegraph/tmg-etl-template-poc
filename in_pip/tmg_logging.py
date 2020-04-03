@@ -41,6 +41,7 @@ default_logging_dict = \
         }
     }
 
+
 class TMGLogging:
 
     def __init__(self, config, app_name):
