@@ -5,20 +5,19 @@ from in_pip.tmg_etl_runner import ETLInterface, ETLRunner
 import sys
 import click
 
-
-
 PYTHON_MIN_VERSION = (3, 6)
-APP_NAME = 'poc' # Created in the template
+APP_NAME = 'poc'  # Created in the template
 
 
 @click.command()
 @click.option('-c', '--config', required=True, type=str, help='Location of Configuration.\ngs://[bucket]/[config]\n/full/local/path)')
 @click.option('-sd', '--start_date', required=False, type=click.DateTime(formats=['%Y%m%d']))
 @click.option('-ed', '--end_date', required=False, type=click.DateTime(formats=['%Y%m%d']))
-def instantiate_etl_runner(config, start_date, end_date):
+@click.option('-b', '--backfill', required=False, is_flag=True)
+def instantiate_etl_runner(config, start_date, end_date, backfill):
 
     runner = ETLRunner(APP_NAME, config, ETLPipeline)  #TODO: Investigate passing all other click commands into this function?
-    runner.run(start_date=start_date, end_date=end_date)
+    runner.run(start_date=start_date, end_date=end_date, my_flag=backfill)
 
 
 if __name__ == "__main__":

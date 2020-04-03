@@ -13,8 +13,13 @@ class TMGLogging:
     def __init__(self, config, app_name):
         self.config = config
         self.app_name = app_name
+        self._logger = self._get_logger()
 
-    def get_logger(self):
+    @property
+    def logger(self):
+        return self._logger
+
+    def _get_logger(self):
         if self.config.get('logger'):
             logger = self._load_custom_logger()
         else:

@@ -8,8 +8,13 @@ class ConfigurationLoader:
 
     def __init__(self, config_location):
         self.config_location = config_location
+        self._config = self._load_config()
 
-    def load_config(self):
+    @property
+    def config(self):
+        return self._config
+
+    def _load_config(self):
 
         if self.config_location[:2] == 'gs':
             return self._load_config_from_gs()
