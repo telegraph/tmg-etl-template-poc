@@ -8,6 +8,39 @@ MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 LOGGING_FILENAME_PATH = os.path.join(MODULE_PATH, 'conf', 'logging.yml')
 
 
+default_logging_dict = \
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "{app_name} %(levelname)9s %(asctime)3s Module: %(module)s - Line: %(lineno)s %(message)s"
+            }
+        },
+        "handlers": {
+            "default": {
+                "level": "INFO",
+                "formatter": "default",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout"
+            },
+            "errors": {
+                "level": "ERROR",
+                "formatter": "default",
+                "class": "logging.StreamHandler"
+            }
+        },
+        "loggers": {
+            "default": {
+                "handlers": [
+                    "default",
+                    "errors"
+                ],
+                "level": "INFO",
+                "propagate": "no"
+            }
+        }
+    }
+
 class TMGLogging:
 
     def __init__(self, config, app_name):
@@ -27,14 +60,10 @@ class TMGLogging:
         return logger
 
     def _load_default_logger(self, logging_config_file=LOGGING_FILENAME_PATH):
-        with open(logging_config_file, 'rt') as logging_file:
-            logging_dict_config = yaml.load(logging_file, Loader=yaml.SafeLoader)
-            logging_dict_config['formatters']['default']['format'] = logging_dict_config['formatters']['default']['format'].format(app_name=self.app_name)
-            logging.config.dictConfig(logging_dict_config)
 
-            logger = logging.getLogger('default')
-
-            return logger
+        logging.config.dictConfig(default_logging_dict)
+        logger = logging.getLogger('default')
+        return logger
 
     def _load_custom_logger(self):
         """
