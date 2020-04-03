@@ -17,7 +17,7 @@ APP_NAME = 'poc'  # Created in the template
 def instantiate_etl_runner(config, start_date, end_date, backfill):
 
     runner = ETLRunner(APP_NAME, config, ETLPipeline)  #TODO: Investigate passing all other click commands into this function?
-    runner.run(start_date=start_date, end_date=end_date, my_flag=backfill)
+    runner.run(start_date, end_date, backfill)
 
 
 if __name__ == "__main__":

@@ -17,9 +17,9 @@ class ETLRunner:
         self.logger = TMGLogging(self.config, app_name).logger
         self.pipeline = etl_pipeline(self.config, self.logger)
 
-    def run(self, **kwargs):
+    def run(self, *args, **kwargs):
         try:
-            self.pipeline.run_pipeline(**kwargs)
+            self.pipeline.run_pipeline(*args, **kwargs)
         finally:
             self.pipeline.graceful_shutdown()
 
@@ -27,9 +27,9 @@ class ETLRunner:
 class ETLInterface(metaclass=abc.ABCMeta): #TODO: Find out what the different ABC types are
 
     @abc.abstractmethod
-    def run_pipeline(self):
+    def run_pipeline(self, *args, **kwargs):
         pass
 
     @abc.abstractmethod
-    def graceful_shutdown(self):
+    def graceful_shutdown(self, *args, **kwargs):
         pass
