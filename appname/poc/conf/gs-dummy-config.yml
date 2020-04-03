@@ -11,7 +11,7 @@ logger:
 
     formatters:
       default:
-        format: 'LOADED FROM GS {app_name} %(levelname)9s %(asctime)3s Module:  %(message)s'
+        format: 'CHANGED JUST NOW! {app_name} %(levelname)9s %(asctime)3s Module:  %(message)s'
 
     handlers:
       default:
