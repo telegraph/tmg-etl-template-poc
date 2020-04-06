@@ -1,9 +1,9 @@
-from in_pip.tmg_etl_runner import ETLInterface
+from in_pip.etl import TMGETLPipeline
 
 
-class ETLPipeline(ETLInterface):
+class ETLPipeline(TMGETLPipeline):
 
-    def run_pipeline(self, start_date, end_date, backfill):
+    def run(self, start_date, end_date, backfill):
 
         self.logger.info('HELLO')
         self.logger.info('Start Date: %s' % start_date)
